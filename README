@@ -1,0 +1,31 @@
+This python script converts your Oink CSVs (those with location info only) to a pretty JSON to do whaterver you please with. 
+
+Features:
+* Export to single JSON
+* Include foursquare venue info (name, lat, long, address, etc.)
+* Removes entries with no location
+* Merges comments and ratings for those available
+
+Requirements:
+* Oink export CSV (can be requested on http://oink.com)
+* Foursquare OAUTH token (see section below)
+* Python 
+* Terminal
+
+Get Foursqaure OAUTH token:
+1. Visit https://developer.foursquare.com/docs/explore#req=users/self
+2. Your token is everything after "OAuth token automatically added. https://api.foursquare.com/v2/users/self?oauth_token="
+
+Execution Instructions:
+1. copy oink_export.py to same folder as your Oink CSVs
+2. open terminal to Oink CSV folder
+3. run 'python oink_export.py --token=YOUR_OAUTH_TOKEN_HERE'
+4. watch it fly through your data
+
+TODO:
+* Take OAUTH token as a paramenter 
+* Actually do the OAUTH through the script
+* Include Oink TODOs (waiting on Oink team to include them as part of the export)
+* Associate images exported to reviews
+* Check for proper OAUTH token being passed in for foursquare
+
