@@ -5,7 +5,6 @@ import urllib2
 import sys
 import getopt
 
-
 def get_json_from_csv(filename, fieldnames):
 	file_contents = open(filename, 'r')
 	reader = csv.DictReader( file_contents, fieldnames = fieldnames)
@@ -34,9 +33,13 @@ def get_oinks_with_location(ratings, reviews):
 
 	return ratings_array
 
-def get_oinks_with_location_information(oinks, foursquare_url):
+def get_oinks_with_location_information(oinks, OAUTH):
+
+	URL = 'https://api.foursquare.com/v2/venues/'
+
 	#add foursqare data to entires
 	for oink in oinks:
+		foursquare_url = URL + oink['foursquare'] + OAUTH
 		response = urllib2.urlopen(foursquare_url)
 		response_json = json.loads(response.read())
 
@@ -91,7 +94,6 @@ def export(argv=None):
 		
 		for opt, arg in opts:
 			if opt == '--token':
-				URL = 'https://api.foursquare.com/v2/venues/'
 				OAUTH = '?oauth_token=' + arg
 	except:
 		return 'No token found'
@@ -108,8 +110,7 @@ def export(argv=None):
 	#get the reviews with location
 	oinks_with_location = get_oinks_with_location(ratings_json, reviews_json)
 
-	foursquare_url = URL + oink['foursquare'] + OAUTH
-	oinks_with_location_information = get_oinks_with_location_information(oinks_with_location, foursquare_url)
+	oinks_with_location_information = get_oinks_with_location_information(oinks_with_location, OAUTH)
 
 	#write JSON to file
 	FILE = open("oink_export.json","w")
